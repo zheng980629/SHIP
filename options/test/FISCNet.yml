@@ -1,0 +1,32 @@
+name: FISCNet_test
+model_type: FusionMaskModel
+scale: 1
+num_gpu: 1  # set num_gpu: 0 for cpu mode
+manual_seed: 10
+
+
+datasets:
+  test_1:  # the 1st test dataset
+    name: TNO
+    type: PairedFusionMaskImageDataset
+    dataroot_gt: /M3FD_Fusion_test/Ir
+    dataroot_lq: /M3FD_Fusion_test/Vis
+    dataroot_mask: /M3FD_Fusion_test/Vis
+    io_backend:
+      type: disk
+
+network_g:
+  type: FISCNet
+  vis_channels: 1
+  inf_channels: 1
+  n_feat: 16
+
+#### path
+path:
+  pretrain_network_g: /pretrained_model/FISCNet_model.pth
+  param_key_g: params_ema
+
+val:
+  save_img: true
+  suffix: ~  # add suffix to saved images, if None, use exp name
+

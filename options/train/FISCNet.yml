@@ -1,0 +1,110 @@
+name: FISCNet_M3FD_training
+use_tb_logger: true
+model_type: FusionMaskModel
+scale: 1
+num_gpu: 1  # set num_gpu: 0 for cpu mode
+manual_seed: 10
+#### datasets
+
+datasets:
+  train:
+    name: M3FD
+    type: PairedFusionMaskImageDataset
+    dataroot_gt: /M3FD_Fusion_test/Ir
+    dataroot_lq: /M3FD_Fusion_test/Vis
+    dataroot_mask: /M3FD_Fusion_test/mask_vi
+    filename_tmpl: '{}'
+    io_backend:
+      type: disk
+      # (for lmdb)
+      # type: lmdb
+
+    gt_size: 128
+    use_flip: true
+    use_rot: true
+
+    # data loader
+    use_shuffle: true
+    num_worker_per_gpu: 6
+    batch_size_per_gpu: 4
+    dataset_enlarge_ratio: 10
+    prefetch_mode: ~
+
+  val:
+    name: M3FD
+    type: PairedFusionMaskImageDataset
+    dataroot_gt: /M3FD_Fusion_test/Ir
+    dataroot_lq: /M3FD_Fusion_test/Vis
+    dataroot_mask: /M3FD_Fusion_test/mask_vi
+    io_backend:
+      type: disk
+
+
+#### network structures
+network_g:
+  type: FISCNet
+  vis_channels: 1
+  inf_channels: 1
+  n_feat: 16
+
+
+#### path
+path:
+  pretrain_network_g: ~
+  strict_load_g: true
+  resume_state: ~
+
+#### training settings: learning rate scheme, loss
+
+train:
+  ema_decay: 0.0
+  optim_g:
+    type: Adam
+    lr: !!float 1e-4
+    weight_decay: 0
+    betas: [0.9, 0.999]
+
+  scheduler:
+    type: MultiStepLR
+    milestones: [15000, 25000]
+    gamma: 0.75
+
+  total_iter: 100000
+  warmup_iter: -1  # no warm up
+  dual: False
+
+  # losses
+  pixel_opt:
+    type: MaskFusionL1loss
+    loss_weight: 3.0
+    reduction: mean
+  max_opt:
+    type: MaxFusionloss
+    loss_weight: 10.0
+    reduction: mean
+  gradient_opt:
+    type: GradientFusionloss
+    loss_weight: 10.0
+    reduction: mean
+
+val:
+  val_freq: !!float 1000
+  save_img: true
+  suffix: true
+
+  # metrics:
+  #   psnr: # metric name, can be arbitrary
+  #     type: calculate_psnr
+  #     crop_border: 0
+  #     test_y_channel: false
+
+#### logger
+
+
+logger:
+  print_freq: 100
+  save_checkpoint_freq: !!float 2000
+  use_tb_logger: true
+  wandb:
+    project: ~
+    resume_id: ~
