@@ -1,8 +1,8 @@
 # Frequency Integration and Spatial Compensation Network for Infrared and Visible Image Fusion
 
-Naishan Zheng, Man Zhou, 
+Naishan Zheng, Man Zhou, Jie Huang, Junming Hou, Haoying Li, Yuan Xu, Feng Zhao
 
- University of Science and Technology of China
+ University of Science and Technology of China, Southeast University, Zhejiang University
 
 ---
 >Infrared and visible image fusion aims to generate a fused image by integrating and distinguishing complementary information from multiple sources. While the cross-attention mechanism with global spatial interactions appears promising, it only capture second-order spatial interactions, neglecting higher-order interactions in both spatial and channel dimensions. This limitation hampers the exploitation of synergies between multi-modalities. To bridge this gap, we introduce a Synergistic High-order Interaction Paradigm (SHIP), designed to systematically investigate the spatial fine-grained and global statistics collaborations between infrared and visible images across two fundamental dimensions: 1) Spatial dimension: we construct spatial fine-grained interactions through element-wise multiplication, mathematically equivalent to global interactions, and then foster high-order formats by iteratively aggregating and evolving complementary information, enhancing both efficiency and flexibility; 2) Channel dimension: expanding on channel interactions with first-order statistics (mean), we devise high-order channel interactions to facilitate the discernment of inter-dependencies between source images based on global statistics. Harnessing high-order interactions significantly enhances our model's ability to exploit multi-modal synergies, leading to superior performance over state-of-the-art alternatives, as shown through comprehensive experiments across various benchmarks. 
@@ -35,5 +35,4 @@ Updating the paths in configure files of /SHIP/options/train/highOrderInteractio
 3. Run the training commands.
  ```
 python train.py -opt /SHIP/options/train/highOrderInteractionFusion.yml
-```
 ```
