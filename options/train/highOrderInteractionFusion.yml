@@ -1,4 +1,4 @@
-name: FISCNet_M3FD_training
+name: highOrderInteractionFusion_M3FD_training
 use_tb_logger: true
 model_type: FusionMaskModel
 scale: 1
@@ -42,7 +42,7 @@ datasets:
 
 #### network structures
 network_g:
-  type: FISCNet
+  type: highOrderInteractionFusion
   vis_channels: 1
   inf_channels: 1
   n_feat: 16

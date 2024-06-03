@@ -1,23 +1,39 @@
-# Rubik's Cube: High-Order Channel Interactions with a Hierarchical Receptive Field (NeurIPS2023)
+# Frequency Integration and Spatial Compensation Network for Infrared and Visible Image Fusion
 
-Naishan Zheng, Man Zhou, Chong Zhou, Chen Change Loy
+Naishan Zheng, Man Zhou, 
 
-S-Lab, Nanyang Technological University   
+ University of Science and Technology of China
 
 ---
->Image restoration techniques, spanning from the convolution to the transformer paradigm, have demonstrated robust spatial representation capabilities to deliver high-quality performance. Yet, many of these methods, such as convolution and the Feed Forward Network (FFN) structure of transformers, primarily leverage the basic first-order channel interactions and have not maximized the potential benefits of higher-order modeling. To address this limitation, our research dives into understanding relationships within the channel dimension and introduces a simple yet efficient, high-order channel-wise operator tailored for image restoration. Instead of merely mimicking high-order spatial interaction, our approach offers several added benefits: Efficiency: It adheres to the zero-FLOP and zero-parameter
-principle, using a spatial-shifting mechanism across channel-wise groups. Simplicity: It turns the favorable channel interaction and aggregation capabilities into element-wise multiplications and convolution units with 1 × 1 kernel. Our new formulation expands the first-order channel-wise interactions seen in previous works to arbitrary high orders, generating a hierarchical receptive field akin to a Rubik’s cube through the combined action of shifting and interactions. Furthermore, our proposed Rubik’s cube convolution is a flexible operator that can be incorporated into existing image restoration networks, serving as a drop-in replacement for the standard convolution unit with fewer parameters overhead. We conducted experiments across various low-level vision tasks, including image denoising, low-light image enhancement, guided image super-resolution, and image de-blurring. The results consistently demonstrate that our Rubik’s cube operator enhances performance across all tasks.>
+>Infrared and visible image fusion aims to generate a fused image by integrating and distinguishing complementary information from multiple sources. While the cross-attention mechanism with global spatial interactions appears promising, it only capture second-order spatial interactions, neglecting higher-order interactions in both spatial and channel dimensions. This limitation hampers the exploitation of synergies between multi-modalities. To bridge this gap, we introduce a Synergistic High-order Interaction Paradigm (SHIP), designed to systematically investigate the spatial fine-grained and global statistics collaborations between infrared and visible images across two fundamental dimensions: 1) Spatial dimension: we construct spatial fine-grained interactions through element-wise multiplication, mathematically equivalent to global interactions, and then foster high-order formats by iteratively aggregating and evolving complementary information, enhancing both efficiency and flexibility; 2) Channel dimension: expanding on channel interactions with first-order statistics (mean), we devise high-order channel interactions to facilitate the discernment of inter-dependencies between source images based on global statistics. Harnessing high-order interactions significantly enhances our model's ability to exploit multi-modal synergies, leading to superior performance over state-of-the-art alternatives, as shown through comprehensive experiments across various benchmarks. 
 ---
+<img src="./asserts/framework.png" width="800px"/>
+<img src="./asserts/highOrder_spatial.png" width="800px"/>
 
 
-## Applications
-### 🚀: Low-Light Image Enhancement
+## 🚀: How to test
 
+1. Update the paths of image sets and pre-trained models.
+ ```
+Updating the paths in configure files of /SHIP/options/test/highOrderInteractionFusion.yml
+```
 
-### 🚀: Image Deblur
+2. Run the testing commands.
+ ```
+python test.py -opt /SHIP/options/test/highOrderInteractionFusion.yml
+```
 
+## 🚀: How to train
 
-### 🚀: Image Denoising
+1. Download saliency maps on the M3FD dataset from [Google Drive](https://drive.google.com/drive/folders/1CIsMmt6XZH4UMjca4K1DhLew_xNGrXv0?usp=drive_link) or run VSM.m to generate maps for your own data.
 
+2. Update the paths of image sets in the training configuration.
+ ```
+Updating the paths in configure files of /SHIP/options/train/highOrderInteractionFusion.yml
+```
 
-### 🚀: Classification
+3. Run the training commands.
+ ```
+python train.py -opt /SHIP/options/train/highOrderInteractionFusion.yml
+```
+```
