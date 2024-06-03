@@ -1,4 +1,4 @@
-# Frequency Integration and Spatial Compensation Network for Infrared and Visible Image Fusion
+# Probing Synergistic High-Order Interaction in Infrared and Visible Image Fusion
 
 Naishan Zheng, Man Zhou, Jie Huang, Junming Hou, Haoying Li, Yuan Xu, Feng Zhao
 
